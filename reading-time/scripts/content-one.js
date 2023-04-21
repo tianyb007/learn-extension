@@ -13,7 +13,7 @@ if (article) {
   const chineseChars = text.matchAll(chineseMatchRegExp);
   const charsCount = [...chineseChars].length;
   // calculate time
-  const readingTime = Math.round(wordsCount / 200 + charsCount / 200);
+  const readingTime = Math.round(wordsCount / 100 + charsCount / 100);
 
   // insert p
   const badge = document.createElement("p");
