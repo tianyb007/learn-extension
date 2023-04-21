@@ -1,28 +1,22 @@
-const article = document.querySelector("article");
+const article = document.querySelector("article, div.post");
 
+// `document.querySelector` may return null if the selector doesn't match anything.
 if (article) {
   const text = article.textContent;
-
-  //计算英文单词量
-  const wordMatchRegExp = /[^\s]+/g;
+  const wordMatchRegExp = /[^\s]+/g; // Regular expression
   const words = text.matchAll(wordMatchRegExp);
+  // matchAll returns an iterator, convert to array to get word count
   const wordCount = [...words].length;
-
-  //计算中文字词数
-  const chineseMatchRegExp = /[\u4E00-\u9FA5]+/g;
-  const chineseChars = text.matchAll(chineseMatchRegExp);
-  const chineseCount = [...chineseChars].length;
-
-  // 估计阅读时长
-  const readingTime = Math.round(wordCount / 200) + Math.round(chineseCount / 200);
-
-  //为页面创建新的元素，添加样式，在页面中插入
+  const readingTime = Math.round(wordCount / 200);
   const badge = document.createElement("p");
+  // Use the same styling as the publish information in an article's header
   badge.classList.add("color-secondary-text", "type--caption");
-  badge.textContent = `⏱️预计${readingTime}分钟可读完 `;
+  badge.textContent = `⏱️ ${readingTime} min read`;
 
-  const heading = document.querySelector("h1");
+  // Support for API reference docs
+  const heading = article.querySelector("h1");
+  // Support for article docs with date
   const date = article.querySelector("time")?.parentNode;
-  (date ?? heading).insertAdjacentElement("afterend", badge);
 
+  (date ?? heading).insertAdjacentElement("afterend", badge);
 }
